@@ -8,3 +8,13 @@ Content-Type: application/json
     "password": "mysecurepassword123",
     "role": "participant"
 }
+
+
+### Login User
+POST http://localhost:5001/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "kasun@example.com",
+    "password": "mysecurepassword123"
+}
