@@ -3,6 +3,7 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
+const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 
 dotenv.config();
 
@@ -18,6 +19,9 @@ app.use('/api/auth', authRoutes);
 app.get('/', (req, res) => {
     res.json({ message: 'Identity Service is up and running!' });
 });
+
+app.use(notFound);
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5001;
 
