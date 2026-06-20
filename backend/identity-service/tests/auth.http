@@ -18,3 +18,8 @@ Content-Type: application/json
     "email": "kasun@example.com",
     "password": "mysecurepassword123"
 }
+
+
+### Get User Profile (Protected)
+GET http://localhost:5001/api/auth/profile
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMzU0OWU0MzJhMmJmZWIwMmM2NmMyOCIsImlhdCI6MTc4MTg4MDA2MywiZXhwIjoxNzgyMTM5MjYzfQ.j8o-7VYwC-Qyptfkp6Yempoqzjnm5Jli32qtfsbXPAU
