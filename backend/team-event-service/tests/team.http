@@ -1,0 +1,9 @@
+### Create a New Team for the Event
+POST http://localhost:5002/api/teams
+Content-Type: application/json
+
+{
+    "name": "CodeBlasters",
+    "eventId": "6a38d128cad36f2d08bb6e9a",
+    "leaderId": "64a2b1234567890abcdef123"
+}
