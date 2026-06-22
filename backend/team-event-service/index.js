@@ -3,6 +3,7 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const eventRoutes = require('./routes/eventRoutes');
+const teamRoutes = require('./routes/teamRoutes');
 
 dotenv.config();
 
@@ -14,6 +15,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api/events', eventRoutes);
+app.use('/api/teams', teamRoutes);
 
 app.get('/', (req, res) => {
     res.json({ message: 'Team & Event Service is up and running!' });
