@@ -101,9 +101,45 @@ const acceptInvitation = async (req, res) => {
     }
 };
 
+const getTeamsForEvent = async (req, res) => {
+    try {
+        const eventId = req.params.eventId;
+
+        const teams = await Team.find({ eventId });
+
+        res.status(200).json({
+            success: true,
+            count: teams.length,
+            data: teams
+        });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
+
+const getTeamById = async (req, res) => {
+    try {
+        const teamId = req.params.id;
+
+        const team = await Team.findById(teamId);
+
+        if (!team) {
+            return res.status(404).json({ success: false, message: 'Team not found' });
+        }
+
+        res.status(200).json({
+            success: true,
+            data: team
+        });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
 
 module.exports = {
     createTeam,
     inviteMember,
-    acceptInvitation
+    acceptInvitation,
+    getTeamsForEvent,
+    getTeamById
 };
