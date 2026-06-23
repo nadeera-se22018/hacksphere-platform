@@ -68,8 +68,42 @@ const inviteMember = async (req, res) => {
     }
 };
 
+const acceptInvitation = async (req, res) => {
+    try {
+        const { userId } = req.body; 
+        const teamId = req.params.id;
+
+        const team = await Team.findById(teamId);
+        if (!team) {
+            return res.status(404).json({ success: false, message: 'Team not found' });
+        }
+
+        const memberIndex = team.members.findIndex(member => member.userId === userId);
+
+        if (memberIndex === -1) {
+            return res.status(400).json({ success: false, message: 'User is not invited to this team' });
+        }
+
+        if (team.members[memberIndex].status === 'accepted') {
+            return res.status(400).json({ success: false, message: 'User has already accepted the invitation' });
+        }
+
+        team.members[memberIndex].status = 'accepted';
+        await team.save();
+
+        res.status(200).json({
+            success: true,
+            data: team,
+            message: 'Invitation accepted successfully!'
+        });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
+
 
 module.exports = {
     createTeam,
-    inviteMember
+    inviteMember,
+    acceptInvitation
 };
