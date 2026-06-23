@@ -1,9 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const { createTeam, inviteMember, acceptInvitation } = require('../controllers/teamController');
+const { createTeam, inviteMember, acceptInvitation, getTeamsForEvent, getTeamById } = require('../controllers/teamController');
 
 router.route('/')
     .post(createTeam);
+
+router.route('/event/:eventId')
+    .get(getTeamsForEvent);
+
+router.route('/:id')
+    .get(getTeamById);
 
 router.route('/:id/invite')
     .post(inviteMember);
