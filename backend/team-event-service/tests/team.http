@@ -15,3 +15,12 @@ Content-Type: application/json
 {
     "userId": "64b3c9876543210fedcba321" 
 }
+
+
+### Accept Team Invitation
+PUT http://localhost:5002/api/teams/6a391d53fb379c02e9547c30/accept
+Content-Type: application/json
+
+{
+    "userId": "64b3c9876543210fedcba321"
+}
