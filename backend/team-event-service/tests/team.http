@@ -24,3 +24,11 @@ Content-Type: application/json
 {
     "userId": "64b3c9876543210fedcba321"
 }
+
+
+### Get All Teams for a Specific Event
+GET http://localhost:5002/api/teams/event/6a38d128cad36f2d08bb6e9a
+
+
+### Get a Single Team by ID
+GET http://localhost:5002/api/teams/6a391d53fb379c02e9547c30
