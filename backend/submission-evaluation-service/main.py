@@ -1,10 +1,13 @@
 from fastapi import FastAPI
 from config.database import engine, Base
 from models import submission, evaluation
+from routers import submission as submission_router
 
 app = FastAPI(title="Submission & Evaluation Service")
 
 Base.metadata.create_all(bind=engine)
+
+app.include_router(submission_router.router, prefix="/api/submissions", tags=["Submissions"])
 
 @app.get("/")
 def read_root():
