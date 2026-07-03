@@ -39,4 +39,6 @@ app.MapControllers();
 
 app.MapHub<LeaderboardHub>("/leaderboardHub");
 
+app.MapHub<NotificationHub>("/notificationHub");
+
 app.Run();
