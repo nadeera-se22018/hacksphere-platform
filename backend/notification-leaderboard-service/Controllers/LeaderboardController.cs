@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using notification_leaderboard_service.Services;
+using notification_leaderboard_service.Hubs;
 
 namespace notification_leaderboard_service.Controllers;
 
@@ -8,10 +10,12 @@ namespace notification_leaderboard_service.Controllers;
 public class LeaderboardController : ControllerBase
 {
     private readonly ILeaderboardService _leaderboardService;
+    private readonly IHubContext<LeaderboardHub> _hubContext;
 
-    public LeaderboardController(ILeaderboardService leaderboardService)
+    public LeaderboardController(ILeaderboardService leaderboardService, IHubContext<LeaderboardHub> hubContext)
     {
         _leaderboardService = leaderboardService;
+        _hubContext = hubContext;
     }
 
     [HttpPost("update")]
@@ -20,6 +24,8 @@ public class LeaderboardController : ControllerBase
         try
         {
             await _leaderboardService.UpdateTeamScoreAsync(request.TeamId, request.TeamName, request.Score);
+            var topTeams = await _leaderboardService.GetTopTeamsAsync(10);
+            await _hubContext.Clients.All.SendAsync("ReceiveLeaderboardUpdate", topTeams);
             return Ok(new { success = true, message = "Team score updated successfully in Redis!" });
         }
         catch (Exception ex)
