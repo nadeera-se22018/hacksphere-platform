@@ -1,10 +1,19 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from config.database import engine, Base
 from models import submission, evaluation
 from routers import submission as submission_router
 from routers import evaluation as evaluation_router
 
 app = FastAPI(title="Submission & Evaluation Service")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 Base.metadata.create_all(bind=engine)
 
