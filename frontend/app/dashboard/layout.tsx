@@ -4,6 +4,8 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../../context/AuthContext";
 import Sidebar from "../../components/Sidebar";
+import NotificationListener from "../../components/NotificationListener"; 
+import { Toaster } from "react-hot-toast"; 
 
 export default function DashboardLayout({
   children,
@@ -30,6 +32,10 @@ export default function DashboardLayout({
   return (
     <div className="flex h-screen overflow-hidden bg-gray-50">
       <Sidebar />
+
+      <NotificationListener />
+      <Toaster position="top-right" />
+
       <main className="flex-1 overflow-y-auto p-8">
         {children}
       </main>
