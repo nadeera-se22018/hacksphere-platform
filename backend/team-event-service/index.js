@@ -23,6 +23,9 @@ app.get('/', (req, res) => {
 
 const PORT = process.env.PORT || 5002;
 
-app.listen(PORT, () => {
-    console.log(`Team & Event Service is running on port ${PORT}`);
-});
+if (process.env.NODE_ENV !== 'production') {
+    const PORT = process.env.PORT || 5002;
+    app.listen(PORT, () => console.log(`Team & Event Service running on port ${PORT}`));
+}
+
+module.exports = app;
