@@ -12,10 +12,12 @@ connectDB();
 const app = express();
 
 app.use(cors({
-    origin: [
-        "http://localhost:3000", 
-        "https://hacksphere-platform.vercel.app/"
-    ],
+    origin: true, 
+    credentials: true
+}));
+
+app.options('*', cors({
+    origin: true,
     credentials: true
 }));
 
