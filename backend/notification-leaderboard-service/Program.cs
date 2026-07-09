@@ -12,7 +12,7 @@ builder.Services.AddSignalR();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("ClientCorsPolicy", policy => policy
-        .WithOrigins("http://localhost:3000") 
+        .WithOrigins("http://localhost:3000", "https://hacksphere-platform.vercel.app") 
         .AllowAnyMethod()
         .AllowAnyHeader()
         .AllowCredentials()); 
