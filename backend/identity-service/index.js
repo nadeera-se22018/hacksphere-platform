@@ -31,6 +31,9 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 5001;
 
-app.listen(PORT, () => {
-    console.log(`Identity Service is running on port ${PORT}`);
-});
+if (process.env.NODE_ENV !== 'production') {
+    const PORT = process.env.PORT || 5001;
+    app.listen(PORT, () => console.log(`Identity & Auth Service running on port ${PORT}`));
+}
+
+module.exports = app;
