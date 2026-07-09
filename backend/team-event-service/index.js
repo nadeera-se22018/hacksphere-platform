@@ -25,9 +25,7 @@ app.get('/', (req, res) => {
     res.json({ message: 'Team & Event Service is up and running!' });
 });
 
-const PORT = process.env.PORT || 5002;
-
-if (process.env.NODE_ENV !== 'production') {
+if (!process.env.VERCEL) {
     const PORT = process.env.PORT || 5002;
     app.listen(PORT, () => console.log(`Team & Event Service running on port ${PORT}`));
 }
