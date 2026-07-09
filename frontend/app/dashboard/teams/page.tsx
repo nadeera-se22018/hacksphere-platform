@@ -20,7 +20,7 @@ export default function TeamsPage() {
     setSuccessMessage("");
 
     try {
-      const response = await teamApi.post("/", {
+      const response = await teamApi.post("", {
         name: teamName,
         eventId: eventId,
         leaderId: user?.id, 
