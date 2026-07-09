@@ -33,6 +33,15 @@ export default function Sidebar() {
           <Link href="/dashboard/leaderboard" className="group flex items-center rounded-md px-2 py-2 text-sm font-medium text-gray-300 hover:bg-gray-800 hover:text-white">
             Leaderboard
           </Link>
+
+          {(user?.role === 'Judge' || user?.role === 'Teacher') && (
+            <Link href="/dashboard/evaluations" className="group flex items-center rounded-md px-2 py-2 text-sm font-medium text-emerald-400 hover:bg-gray-800 hover:text-emerald-300">
+              <svg className="mr-3 h-5 w-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              Evaluations
+            </Link>
+          )}
         </nav>
       </div>
 
