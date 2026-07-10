@@ -5,10 +5,10 @@ const createTeam = async (req, res) => {
     try {
         const { name, eventId, leaderId } = req.body;
 
-        const event = await Event.findById(eventId);
-        if (!event) {
-            return res.status(404).json({ success: false, message: 'Hackathon event not found' });
-        }
+    //    const event = await Event.findById(eventId);
+    //    if (!event) {
+    //        return res.status(404).json({ success: false, message: 'Hackathon event not found' });
+    //    }
 
         const teamExists = await Team.findOne({ name });
         if (teamExists) {

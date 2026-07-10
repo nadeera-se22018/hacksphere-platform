@@ -7,8 +7,7 @@ const teamSchema = new mongoose.Schema({
         unique: true 
     },
     eventId: { 
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: 'Event', 
+        type: String, 
         required: true 
     },
     leaderId: { 
