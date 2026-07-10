@@ -16,12 +16,16 @@ export default function DashboardLayout({
   const router = useRouter();
 
   useEffect(() => {
-    if (!loading && !user) {
-      router.push("/login");
+    if (!loading) {
+        if (!user) {
+            router.push("/login");
+        } else if (user.role === "pending") {
+            router.push("/choose-role");
+        }
     }
   }, [user, loading, router]);
 
-  if (loading || !user) {
+  if (loading || !user || user.role === "pending") {
     return (
       <div className="flex min-h-screen items-center justify-center bg-gray-50">
         <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
