@@ -18,16 +18,17 @@ passport.use(new GoogleStrategy({
       const randomPassword = Math.random().toString(36).slice(-8) + 'Google@123';
 
       user = await User.create({
+        googleId: profile.id,
         name: profile.displayName,
         username: profile.displayName,
         email: profile.emails[0].value,
         password: randomPassword,
-        role: 'participant'
+        role: 'pending'
       });
 
-      done(null, user);
+      return done(null, user);
     } catch (error) {
-      done(error, null);
+      return done(error, null);
     }
   }
 ));
