@@ -17,6 +17,7 @@ export default function TeamsPage() {
   
   const [teams, setTeams] = useState<Team[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showCreateForm, setShowCreateForm] = useState(false);
   
   const [teamName, setTeamName] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -25,7 +26,11 @@ export default function TeamsPage() {
     const fetchMyTeams = async () => {
       try {
         const res = await teamApi.get(`/user/${user?.id}`); 
-        setTeams(res.data.data || res.data);
+        const fetchedTeams = res.data.data || res.data;
+        setTeams(fetchedTeams);
+        if (fetchedTeams.length === 0) {
+          setShowCreateForm(true);
+        }
         setLoading(false);
       } catch (error) {
         toast.error("Failed to load your teams.");
@@ -53,7 +58,8 @@ export default function TeamsPage() {
       
       toast.success(`Team '${teamName}' created successfully!`);
       setTeamName("");
-      setTeams((prevTeams) => [...prevTeams, res.data.data || res.data]); 
+      setTeams((prevTeams) => [...prevTeams, res.data.data || res.data]);
+      setShowCreateForm(false);
       setIsSubmitting(false);
     } catch (err: any) {
       toast.error(err.response?.data?.message || "Failed to create team. Please try again.");
@@ -78,7 +84,7 @@ export default function TeamsPage() {
         </p>
       </div>
 
-      {teams.length > 0 ? (
+      {teams.length > 0 && !showCreateForm && (
         <div className="space-y-6">
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {teams.map((team) => (
@@ -104,13 +110,18 @@ export default function TeamsPage() {
           </div>
           
           <div className="pt-6">
-            <button className="text-sm font-semibold text-blue-600 hover:text-blue-500 flex items-center gap-2">
+            <button 
+              onClick={() => setShowCreateForm(true)}
+              className="text-sm font-semibold text-blue-600 hover:text-blue-500 flex items-center gap-2"
+            >
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" /></svg>
               Create another team
             </button>
           </div>
         </div>
-      ) : (
+      )}
+
+      {showCreateForm && (
         <div className="bg-white shadow-lg shadow-slate-200/50 sm:rounded-2xl border border-slate-100 p-8 max-w-xl">
           <div className="text-center mb-8">
             <div className="mx-auto w-16 h-16 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mb-4">
@@ -133,13 +144,25 @@ export default function TeamsPage() {
                 onChange={(e) => setTeamName(e.target.value)}
               />
             </div>
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="w-full flex justify-center items-center rounded-xl bg-blue-600 px-4 py-3 text-sm font-bold text-white shadow-sm hover:bg-blue-500 disabled:bg-blue-300 transition-all"
-            >
-              {isSubmitting ? "Creating..." : "Create Team"}
-            </button>
+            
+            <div className="flex gap-4">
+              {teams.length > 0 && (
+                <button
+                  type="button"
+                  onClick={() => setShowCreateForm(false)}
+                  className="w-full flex justify-center items-center rounded-xl bg-slate-100 px-4 py-3 text-sm font-bold text-slate-700 shadow-sm hover:bg-slate-200 transition-all"
+                >
+                  Cancel
+                </button>
+              )}
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full flex justify-center items-center rounded-xl bg-blue-600 px-4 py-3 text-sm font-bold text-white shadow-sm hover:bg-blue-500 disabled:bg-blue-300 transition-all"
+              >
+                {isSubmitting ? "Creating..." : "Create Team"}
+              </button>
+            </div>
           </form>
         </div>
       )}
