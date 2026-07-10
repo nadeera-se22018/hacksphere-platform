@@ -136,10 +136,32 @@ const getTeamById = async (req, res) => {
     }
 };
 
+const getUserTeams = async (req, res) => {
+    try {
+        const userId = req.params.userId;
+
+        const teams = await Team.find({
+            $or: [
+                { leaderId: userId },
+                { 'members.userId': userId }
+            ]
+        });
+
+        res.status(200).json({
+            success: true,
+            count: teams.length,
+            data: teams
+        });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
+
 module.exports = {
     createTeam,
     inviteMember,
     acceptInvitation,
     getTeamsForEvent,
-    getTeamById
+    getTeamById,
+    getUserTeams
 };

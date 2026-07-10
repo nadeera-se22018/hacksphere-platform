@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { createTeam, inviteMember, acceptInvitation, getTeamsForEvent, getTeamById } = require('../controllers/teamController');
+const { createTeam, inviteMember, acceptInvitation, getTeamsForEvent, getTeamById, getUserTeams } = require('../controllers/teamController');
 
 router.route('/')
     .post(createTeam);
@@ -16,5 +16,8 @@ router.route('/:id/invite')
 
 router.route('/:id/accept')
     .put(acceptInvitation);
+
+router.route('/user/:userId')
+    .get(getUserTeams);
 
 module.exports = router;
