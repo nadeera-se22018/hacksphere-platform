@@ -35,6 +35,7 @@ export default function TeamsPage() {
       } catch (error) {
         toast.error("Failed to load your teams.");
         setLoading(false);
+        setShowCreateForm(true);
       }
     };
 
