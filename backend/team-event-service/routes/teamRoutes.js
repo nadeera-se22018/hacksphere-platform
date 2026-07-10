@@ -8,6 +8,9 @@ router.route('/')
 router.route('/event/:eventId')
     .get(getTeamsForEvent);
 
+router.route('/user/:userId')
+    .get(getUserTeams);
+
 router.route('/:id')
     .get(getTeamById);
 
@@ -16,8 +19,5 @@ router.route('/:id/invite')
 
 router.route('/:id/accept')
     .put(acceptInvitation);
-
-router.route('/user/:userId')
-    .get(getUserTeams);
 
 module.exports = router;
