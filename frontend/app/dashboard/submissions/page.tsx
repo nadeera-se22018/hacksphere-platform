@@ -61,7 +61,7 @@ export default function SubmissionsPage() {
         live_url: liveUrl
       };
 
-      await submissionApi.post("/api/submissions", payload);
+      await submissionApi.post("/", payload);
       
       toast.success("Project submitted successfully for evaluation! 🚀");
       setGithubLink("");
