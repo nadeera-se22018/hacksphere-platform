@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const generateToken = require('../utils/generateToken');
+const jwt = require('jsonwebtoken');
 
 const authUser = async (req, res) => {
     try {
@@ -68,4 +69,59 @@ const getUserProfile = async (req, res) => {
     }
 };
 
-module.exports = { registerUser, authUser, getUserProfile };
+const updateUserRole = async (req, res) => {
+    try {
+        const { role } = req.body;
+
+        const validRoles = ['participant', 'judge', 'teacher'];
+
+        if (!role || !validRoles.includes(role.toLowerCase())) {
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid role selected.',
+            });
+        }
+
+        const user = await User.findById(req.user._id);
+
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: 'User not found.',
+            });
+        }
+
+        user.role = role.toLowerCase();
+        await user.save();
+
+        const newToken = jwt.sign(
+            {
+                id: user._id,
+                role: user.role,
+            },
+            process.env.JWT_SECRET,
+            {
+                expiresIn: '30d',
+            }
+        );
+
+        res.status(200).json({
+            success: true,
+            token: newToken,
+            data: {
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                role: user.role,
+            },
+        });
+    } catch (error) {
+        console.error('Update Role Error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Server Error',
+        });
+    }
+};
+
+module.exports = { registerUser, authUser, getUserProfile, updateUserRole };
