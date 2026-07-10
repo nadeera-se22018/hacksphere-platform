@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { registerUser, authUser, getUserProfile } = require('../controllers/authController');
+const { registerUser, authUser, getUserProfile, updateUserRole } = require('../controllers/authController');
 const { protect } = require('../middleware/authMiddleware');
 const { validateRegister, validateLogin } = require('../middleware/validationMiddleware');
 
@@ -11,6 +11,7 @@ const jwt = require('jsonwebtoken');
 router.post('/register', validateRegister, registerUser);
 router.post('/login', validateLogin, authUser);
 router.get('/profile', protect, getUserProfile);
+router.patch('/update-role', protect, updateUserRole);
 
 router.get('/google', passport.authenticate('google', { 
     scope: ['profile', 'email'], 
